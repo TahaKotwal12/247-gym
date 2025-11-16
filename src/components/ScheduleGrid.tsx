@@ -28,23 +28,29 @@ export const ScheduleGrid = ({
       grouped[day] = [];
     });
     slots.forEach((slot) => {
-      if (grouped[slot.day]) {
-        grouped[slot.day].push(slot);
+      const dayGroup = grouped[slot.day];
+      if (dayGroup) {
+        dayGroup.push(slot);
       }
     });
     // Sort slots by time
     Object.keys(grouped).forEach((day) => {
-      grouped[day].sort((a, b) => a.time.localeCompare(b.time));
+      const dayGroup = grouped[day];
+      if (dayGroup) {
+        dayGroup.sort((a, b) => a.time.localeCompare(b.time));
+      }
     });
     return grouped;
   }, [slots]);
 
   const getClassName = (classId: string): string => {
-    return classes.find((c) => c.id === classId)?.name || 'Unknown Class';
+    const found = classes.find((c) => c.id === classId);
+    return found?.name ?? 'Unknown Class';
   };
 
   const getTrainerName = (trainerId: string): string => {
-    return trainers.find((t) => t.id === trainerId)?.name || 'Unknown Trainer';
+    const found = trainers.find((t) => t.id === trainerId);
+    return found?.name ?? 'Unknown Trainer';
   };
 
   const getAvailability = (slot: ScheduleSlot): string => {
@@ -62,7 +68,7 @@ export const ScheduleGrid = ({
     <div className="space-y-6">
       {DAYS.map((day) => {
         const daySlots = scheduleByDay[day];
-        if (daySlots.length === 0) return null;
+        if (!daySlots || daySlots.length === 0) return null;
 
         return (
           <div key={day}>

@@ -2,10 +2,14 @@
  * Card component for displaying content in a contained box
  */
 
-import { HTMLAttributes, ReactNode } from 'react';
+import { ReactNode, HTMLAttributes } from 'react';
 import { motion } from 'framer-motion';
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement> {
+type CardBaseProps = Omit<HTMLAttributes<HTMLDivElement>, 'style'> & {
+  style?: React.CSSProperties;
+};
+
+export interface CardProps extends CardBaseProps {
   children: ReactNode;
   hover?: boolean;
   padding?: 'sm' | 'md' | 'lg' | 'none';
@@ -28,7 +32,6 @@ export const Card = ({
     none: '',
   };
 
-  const Component = hover ? motion.div : 'div';
   const motionProps = hover
     ? {
         whileHover: { y: -4, transition: { duration: 0.2 } },
@@ -36,14 +39,25 @@ export const Card = ({
       }
     : {};
 
+  if (hover) {
+    return (
+      <motion.div
+        className={`${baseStyles} ${paddings[padding]} ${className}`}
+        {...motionProps}
+        {...(props as any)}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+
   return (
-    <Component
+    <div
       className={`${baseStyles} ${paddings[padding]} ${className}`}
-      {...motionProps}
       {...props}
     >
       {children}
-    </Component>
+    </div>
   );
 };
 

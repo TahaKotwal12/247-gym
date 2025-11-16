@@ -93,13 +93,13 @@ export const Modal = ({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className={`bg-white dark:bg-secondary-800 rounded-xl shadow-xl ${sizes[size]} w-full max-h-[90vh] overflow-y-auto`}
+              className={`bg-secondary-800 rounded-xl shadow-xl ${sizes[size]} w-full max-h-[90vh] overflow-y-auto`}
             >
               {title && (
-                <div className="px-6 py-4 border-b border-secondary-200 dark:border-secondary-700">
+                <div className="px-6 py-4 border-b border-secondary-700">
                   <h2
                     id="modal-title"
-                    className="text-xl font-bold text-secondary-900 dark:text-neutral-100"
+                    className="text-xl font-bold text-neutral-100"
                   >
                     {title}
                   </h2>

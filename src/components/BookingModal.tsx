@@ -14,7 +14,7 @@ export interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
   slot: ScheduleSlot | null;
-  className?: string;
+  className?: string; // Used internally for display, not passed to Modal
 }
 
 export const BookingModal = ({
@@ -104,7 +104,6 @@ export const BookingModal = ({
       onClose={onClose}
       title="Book Class"
       size="md"
-      className={className}
     >
       {success ? (
         <div className="text-center py-4">
